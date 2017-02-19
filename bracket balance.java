@@ -7,33 +7,22 @@ import java.util.regex.*;
 public class Solution {
     
     public static boolean isBalanced(String s) {
-        Stack<String> open = new Stack<String>();
-        boolean isbal = false;
-        for(int i = 0; i<s.length(); i++){
-            String st = ""+s.charAt(i);
-            
-            if(st.equals("{") || st.equals("[") || st.equals("(")){
-                open.push(st);
-            }
-            
-            if(st.equals("}") || st.equals("]") || st.equals(")")){
-                String close = open.peek();
-                
-                if(open.isEmpty()) return false;
-                
-                if(st.equals("}") && close.equals("{"))  open.pop();
-                
-                if(st.equals("]") && close.equals("["))  open.pop();
-                
-                if(st.equals(")") && close.equals("("))  open.pop();
-            }
-            
-        }
-        
-        if( s != null && open.isEmpty() )
-            isbal = true;
-        
-        return isbal;
+        Stack<Character> stack = new Stack<Character>();
+		for (char c : s.toCharArray()) {
+			if (c == '(' || c == '[' || c == '{') {
+				stack.push(c);
+			} else {
+				if (stack.isEmpty()) {
+					return false;
+				}
+
+				char top = stack.pop();
+				if (!((c == ')' && top == '(') || (c == ']' && top == '[') || (c == '}' && top == '{'))) {
+					return false;
+				}
+			}
+		}
+		return stack.isEmpty();
     }
   
     public static void main(String[] args) {
